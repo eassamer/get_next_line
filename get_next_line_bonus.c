@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eassamer <eassamer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 11:10:02 by eassamer          #+#    #+#             */
-/*   Updated: 2021/11/24 09:26:40 by eassamer         ###   ########.fr       */
+/*   Created: 2021/11/22 09:06:00 by eassamer          #+#    #+#             */
+/*   Updated: 2021/11/23 20:33:18 by eassamer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"get_next_line.h"
+#include"get_next_line_bonus.h"
 
 char	*ft_change_text(char *text)
 {
@@ -89,15 +89,15 @@ char	*ft_read(char *text, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*text;
+	static char	*text[65536];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	text = ft_read(text, fd);
-	if (text == NULL)
+	text[fd] = ft_read(text[fd], fd);
+	if (text[fd] == NULL)
 		return (NULL);
-	line = ft_just_a_line(text);
-	text = ft_change_text(text);
+	line = ft_just_a_line(text[fd]);
+	text[fd] = ft_change_text(text[fd]);
 	return (line);
 }
